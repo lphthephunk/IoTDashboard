@@ -1,0 +1,17 @@
+.navbar-title {
+  color: white;
+  text-decoration: none;
+  text-underline-position: unset;
+  margin-left: 50px;
+}
+
+.navbar-title::after {
+  color: white;
+  text-decoration: none;
+  text-underline-position: unset;
+}
+.navbar-title:hover {
+  color: white;
+  text-decoration: none;
+  text-underline-position: unset;
+}

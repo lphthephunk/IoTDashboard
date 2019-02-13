@@ -1,5 +1,5 @@
 import React from "react";
 
-export default () => {
-  return <div>Hello World</div>;
+export default ({ children }) => {
+  return <div>{children}</div>;
 };

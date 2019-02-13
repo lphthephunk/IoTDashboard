@@ -4,12 +4,15 @@ import reduxThunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import { BrowserRouter, Route } from "react-router-dom";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./components/App";
 import reducers from "./redux/reducers";
+import Header from "./components/Header";
+import TileContainer from "./components/tiles/TileContainer";
 
 const INITIAL_STATE = {
-  auth: { authenticated: localStorage.getItem("token") }
+  auth_reducer: { authenticated: localStorage.getItem("token") }
 };
 
 const middleWare = [reduxThunk];
@@ -37,7 +40,10 @@ if (window.navigator.userAgent.includes("Chrome")) {
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <App>
+        <Route exact path="/" component={Header} />
+        <Route exact path="/tileContainer" component={TileContainer} />
+      </App>
     </BrowserRouter>
   </Provider>,
   document.querySelector("#root")

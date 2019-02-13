@@ -1,0 +1,4 @@
+.main-div {
+  box-shadow: 5px 5px 5px gray;
+  transition: all 0.2s;
+}
