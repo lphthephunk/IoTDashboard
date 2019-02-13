@@ -1,0 +1,5 @@
+.tile-container-main {
+  margin: 10px 10px;
+  display: flex;
+  justify-content: space-evenly;
+}

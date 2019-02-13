@@ -1,4 +1,28 @@
-.main-div {
+.main-tile {
   box-shadow: 5px 5px 5px gray;
   transition: all 0.2s;
+  width: fit-content;
+  padding: 5px;
+  height: 100%;
+  margin: 10px 10px;
+}
+
+.main-tile h2 {
+  text-align: center;
+  user-select: none;
+}
+
+.main-tile p {
+  user-select: none;
+}
+
+.main-tile:hover {
+  cursor: pointer;
+  background: #ededed;
+}
+
+.main-tile:active {
+  outline: none;
+  background: #e5e5e5;
+  box-shadow: 3px 3px 3px gray;
 }

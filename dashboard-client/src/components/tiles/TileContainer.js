@@ -1,16 +1,33 @@
-import React, { Component } from "react";
-import { getDevices } from "./../../redux/actions/tile_actions";
+import React from "react";
 
-class TileContainer extends Component {
-  componentDidMount() {
-    this.props.getDevices(() => {
-      // TODO: set the devices in the state
-    });
-  }
+import "../component_styles/TileContainer.css";
+import Tile from "./Tile";
 
-  render() {
-    return <div />;
-  }
-}
-
-export default TileContainer;
+export default props => {
+  return (
+    <div className="tile-container-main">
+      {props.devices
+        ? props.devices
+            .sort((a, b) => {
+              if (a.lastStateChange < b.lastStateChange) {
+                return 1;
+              } else {
+                return -1;
+              }
+            })
+            .map(({ name, description, deviceID }, index) => {
+              return (
+                <div key={index}>
+                  <Tile
+                    name={name}
+                    description={description}
+                    deviceID={deviceID}
+                    history={props.history}
+                  />
+                </div>
+              );
+            })
+        : ""}
+    </div>
+  );
+};

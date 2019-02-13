@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import HamburgerMenu from "react-hamburger-menu";
 
 import "./component_styles/Header.css";
-import * as actions from "../redux/actions";
+import * as AuthActions from "../redux/actions/auth_actions";
 import SliderMenu from "./pure_components/SliderMenu";
 
 class Header extends Component {
@@ -78,6 +78,6 @@ function mapStateToProps(state) {
 export default compose(
   connect(
     mapStateToProps,
-    actions
+    AuthActions
   )
 )(Header);

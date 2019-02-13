@@ -8,8 +8,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./components/App";
 import reducers from "./redux/reducers";
-import Header from "./components/Header";
-import TileContainer from "./components/tiles/TileContainer";
+import LandingPage from "./components/LandingPage";
 
 const INITIAL_STATE = {
   auth_reducer: { authenticated: localStorage.getItem("token") }
@@ -41,8 +40,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App>
-        <Route exact path="/" component={Header} />
-        <Route exact path="/tileContainer" component={TileContainer} />
+        <Route exact path="/" component={LandingPage} />
       </App>
     </BrowserRouter>
   </Provider>,
