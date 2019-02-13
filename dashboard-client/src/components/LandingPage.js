@@ -8,19 +8,15 @@ class LandingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      devices: [{}]
+      isFetchingData: false
     };
   }
   componentDidMount() {
     if (this.props.authenticated) {
-      this.props
-        .getDevices()
-        .then(result => {
-          this.setState({ devices: result });
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.setState({ isFetchingData: true });
+      this.props.getDevices(() => {
+        this.setState({ isFetchingData: false });
+      });
     }
   }
 
@@ -29,11 +25,11 @@ class LandingPage extends Component {
       return (
         <TileContainer
           history={this.props.history}
-          devices={this.state.devices}
+          devices={this.props.devices}
         />
       );
     } else {
-      return <h1>Sign in to view devices</h1>;
+      return <h1 style={{ textAlign: "center" }}>Sign in to view devices</h1>;
     }
   }
 
@@ -44,7 +40,8 @@ class LandingPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.auth_reducer.authenticated
+    authenticated: state.auth_reducer.authenticated,
+    devices: state.tile_reducer.devices
   };
 }
 

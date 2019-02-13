@@ -1,0 +1,14 @@
+.signin-border-div div {
+  margin-bottom: 10px;
+}
+
+.signin-border-div {
+  box-shadow: 5px 5px 5px gray;
+  transition: all 0.3s;
+  width: fit-content;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 15%;
+  padding: 3%;
+  background-color: #dddddd;
+}

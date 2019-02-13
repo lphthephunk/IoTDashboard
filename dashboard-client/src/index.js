@@ -9,6 +9,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import App from "./components/App";
 import reducers from "./redux/reducers";
 import LandingPage from "./components/LandingPage";
+import Signin from "./components/auth/Signin";
 
 const INITIAL_STATE = {
   auth_reducer: { authenticated: localStorage.getItem("token") }
@@ -41,6 +42,7 @@ ReactDOM.render(
     <BrowserRouter>
       <App>
         <Route exact path="/" component={LandingPage} />
+        <Route exact path="/signin" component={Signin} />
       </App>
     </BrowserRouter>
   </Provider>,

@@ -16,7 +16,8 @@
     "redux-actions": "^2.6.4",
     "redux-form": "^8.1.0",
     "redux-thunk": "^2.3.0",
-    "save": "^2.3.3"
+    "save": "^2.3.3",
+    "zingchart-react": "^1.0.6"
   },
   "scripts": {
     "start": "react-scripts start",

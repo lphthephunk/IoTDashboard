@@ -1,14 +1,25 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { compose } from "redux";
+
+import "../component_styles/Signin.css";
+import * as AuthActions from "../../redux/actions/auth_actions";
 
 class Signin extends Component {
-  handleSignin(event) {}
+  handleSignin = e => {
+    this.props.signIn(() => {
+      this.props.history.push("/");
+    });
+  };
 
   render() {
     const { handleSubmit } = this.props;
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.handleSignin)}>
+      <div className="signin-border-div">
+        <h2>Sign In</h2>
+        <form>
           <div>
             <Field
               name="username"
@@ -26,7 +37,7 @@ class Signin extends Component {
             />
           </div>
           <div>
-            <button>Sign In</button>
+            <Button onClick={handleSubmit(this.handleSignin)}>Sign In</Button>
           </div>
         </form>
       </div>
@@ -34,4 +45,14 @@ class Signin extends Component {
   }
 }
 
-export default reduxForm({ form: "signin" })(Signin);
+function mapStateToProps(state) {
+  return {};
+}
+
+export default compose(
+  connect(
+    mapStateToProps,
+    AuthActions
+  ),
+  reduxForm({ form: "signin" })
+)(Signin);

@@ -8,7 +8,7 @@ export default props => {
   };
 
   return (
-    <div className="main-tile" onClick={navigateToDetailPage}>
+    <div id="tile" className="main-tile" onClick={navigateToDetailPage}>
       <h2>{props.name}</h2>
       <p>{props.description}</p>
     </div>

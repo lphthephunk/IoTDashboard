@@ -7,6 +7,7 @@ import HamburgerMenu from "react-hamburger-menu";
 
 import "./component_styles/Header.css";
 import * as AuthActions from "../redux/actions/auth_actions";
+import * as DeviceActions from "../redux/actions/tile_actions";
 import SliderMenu from "./pure_components/SliderMenu";
 
 class Header extends Component {
@@ -18,27 +19,41 @@ class Header extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() {}
+
+  handleClick() {
+    this.setState({ isOpen: !this.state.isOpen });
     if (this.props.authenticated) {
       this.setState({
         menuItems: [
           { name: "Manage Devices", URL: "/manageDevices" },
-          { name: "Sign Out", URL: "/" }
+          { name: "Sign Out", URL: "/", event: this.handleSignOut.bind(this) }
         ]
       });
     } else {
       this.setState({
         menuItems: [
           { name: "Manage Devices", URL: "/manageDevices" },
-          { name: "Sign In", URL: "/signin" },
+          {
+            name: "Sign In",
+            URL: "/signin",
+            event: this.handleSigninClick.bind(this)
+          },
           { name: "Register", URL: "/register" }
         ]
       });
     }
   }
 
-  handleClick() {
-    this.setState({ isOpen: !this.state.isOpen });
+  handleSignOut(e) {
+    e.preventDefault();
+    this.props.signOut(() => {
+      this.setState({ isOpen: false });
+    });
+  }
+
+  handleSigninClick(e) {
+    this.setState({ isOpen: false });
   }
 
   render() {
