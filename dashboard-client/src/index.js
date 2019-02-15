@@ -10,6 +10,7 @@ import App from "./components/App";
 import reducers from "./redux/reducers";
 import LandingPage from "./components/LandingPage";
 import Signin from "./components/auth/Signin";
+import TileDetailPage from "./components/tiles/TileDetailPage";
 
 const INITIAL_STATE = {
   auth_reducer: { authenticated: localStorage.getItem("token") }
@@ -43,6 +44,11 @@ ReactDOM.render(
       <App>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/signin" component={Signin} />
+        <Route
+          exact
+          path="/tileDetailPage/:deviceID"
+          component={TileDetailPage}
+        />
       </App>
     </BrowserRouter>
   </Provider>,

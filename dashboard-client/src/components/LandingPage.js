@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 
 import * as TileActions from "../redux/actions/tile_actions";
 import TileContainer from "./tiles/TileContainer";
@@ -13,9 +15,18 @@ class LandingPage extends Component {
   }
   componentDidMount() {
     if (this.props.authenticated) {
-      this.setState({ isFetchingData: true });
-      this.props.getDevices(() => {
-        this.setState({ isFetchingData: false });
+      let sock = new SockJS("http://localhost:8080/iot-socket");
+      let stompClient = Stomp.over(sock);
+      stompClient.connect({}, () => {
+        stompClient.subscribe("/topic/listenForDevices", message => {
+          let fetchedDevices = JSON.parse(message.body);
+          this.setState({ devices: fetchedDevices });
+        });
+
+        this.setState({ isFetchingData: true });
+        this.props.getDevices(() => {
+          this.setState({ isFetchingData: false });
+        });
       });
     }
   }
@@ -25,7 +36,7 @@ class LandingPage extends Component {
       return (
         <TileContainer
           history={this.props.history}
-          devices={this.props.devices}
+          devices={this.state.devices}
         />
       );
     } else {
@@ -40,8 +51,7 @@ class LandingPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.auth_reducer.authenticated,
-    devices: state.tile_reducer.devices
+    authenticated: state.auth_reducer.authenticated
   };
 }
 
