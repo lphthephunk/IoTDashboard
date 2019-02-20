@@ -15,7 +15,7 @@ export default props => {
                 return -1;
               }
             })
-            .map(({ name, description, deviceID }, index) => {
+            .map(({ name, description, deviceID, topic }, index) => {
               return (
                 <div key={index}>
                   <Tile
@@ -23,6 +23,7 @@ export default props => {
                     description={description}
                     deviceID={deviceID}
                     history={props.history}
+                    topic={topic}
                   />
                 </div>
               );

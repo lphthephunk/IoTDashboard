@@ -4,10 +4,10 @@ import { compose } from "redux";
 import { Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import HamburgerMenu from "react-hamburger-menu";
+import { withRouter } from "react-router";
 
 import "./component_styles/Header.css";
 import * as AuthActions from "../redux/actions/auth_actions";
-import * as DeviceActions from "../redux/actions/tile_actions";
 import SliderMenu from "./pure_components/SliderMenu";
 
 class Header extends Component {
@@ -91,6 +91,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
+  withRouter,
   connect(
     mapStateToProps,
     AuthActions

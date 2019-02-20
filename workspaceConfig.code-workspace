@@ -1,0 +1,11 @@
+{
+  "folders": [
+	{
+		"path": "dashboard-client"
+	}
+],
+  "settings": {
+    "git.ignoreLimitWarning": true,
+    "maven.view": "flat"
+  }
+}

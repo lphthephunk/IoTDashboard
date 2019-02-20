@@ -4,7 +4,7 @@ import "../component_styles/Tile.css";
 
 export default props => {
   const navigateToDetailPage = () => {
-    props.history.push(`/tileDetailPage/${props.deviceID}`);
+    props.history.push(`/tileDetailPage/${props.topic}/${props.deviceID}`);
   };
 
   return (

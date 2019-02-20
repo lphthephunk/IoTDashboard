@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 
-import * as TileActions from "../redux/actions/tile_actions";
+import * as DeviceActions from "../redux/actions/tile_actions";
 import TileContainer from "./tiles/TileContainer";
+
+var stompClient;
 
 class LandingPage extends Component {
   constructor(props) {
@@ -16,10 +18,11 @@ class LandingPage extends Component {
   componentDidMount() {
     if (this.props.authenticated) {
       let sock = new SockJS("http://localhost:8080/iot-socket");
-      let stompClient = Stomp.over(sock);
+      stompClient = Stomp.over(sock);
       stompClient.connect({}, () => {
         stompClient.subscribe("/topic/listenForDevices", message => {
           let fetchedDevices = JSON.parse(message.body);
+          console.log(fetchedDevices);
           this.setState({ devices: fetchedDevices });
         });
 
@@ -28,6 +31,12 @@ class LandingPage extends Component {
           this.setState({ isFetchingData: false });
         });
       });
+    }
+  }
+
+  componentWillUnmount() {
+    if (stompClient) {
+      stompClient.disconnect();
     }
   }
 
@@ -57,5 +66,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  TileActions
+  DeviceActions
 )(LandingPage);

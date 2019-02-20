@@ -1,54 +1,47 @@
 import React, { Component } from "react";
-import { BarChart } from "react-easy-chart";
-import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
 import { connect } from "react-redux";
 
 import "../component_styles/TileDetailPage.css";
 import * as DeviceActions from "../../redux/actions/tile_actions";
+import * as ChartsAndGraphs from "../chartsAndGraphs";
+import { WeatherDevice } from "../../helpers/deviceTypes";
 
 class TileDetailPage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      data: [{}]
+      deviceID: this.props.match.params.deviceID,
+      topic: this.props.match.params.topic
     };
   }
 
-  componentDidMount() {
-    let sock = new SockJS("http://localhost:8080/iot-socket");
-    let stompClient = Stomp.over(sock);
-    stompClient.connect({}, () => {
-      // TODO: pass in the subscribtion topic to subscribe to
-      stompClient.subscribe("/topic/listenForWeatherDeviceChanges", message => {
-        let newData = JSON.parse(message.body);
-        let convertedMap = [];
-        for (let data of newData) {
-          data.lastStateChange = new Date(data.lastStateChange.iMillis);
-          convertedMap.push({ x: data.lastStateChange, y: "" });
-        }
-
-        console.log(convertedMap);
-
-        this.setState({ data: convertedMap });
-      });
-
-      this.props.getDeviceTelemetry();
-    });
+  renderChart() {
+    switch (this.state.topic) {
+      case WeatherDevice:
+        return (
+          <div>
+            <ChartsAndGraphs.LineGraph
+              deviceID={this.state.deviceID}
+              deviceType={this.state.topic}
+              axisLabels={{ x: "Report Time", y: "Readings" }}
+              margin={{ top: 10, right: 30, bottom: 50, left: 70 }}
+              xType={"text"}
+              lineColors={["green", "blue", "red"]}
+              isUseAxes={true}
+              isUseGrid={true}
+              width={window.innerWidth - 100}
+              height={window.innerHeight - 100}
+              interpolate={"cardinal"}
+            />
+          </div>
+        );
+      default:
+        return <h1>Device not supported</h1>;
+    }
   }
 
   render() {
-    return (
-      <div className="graph-div">
-        <BarChart
-          axisLabels={{ x: "Day of month", y: "Some Y value" }}
-          width={Number(window.innerWidth / 2)}
-          height={Number(window.innerHeight / 2)}
-          data={this.state.data}
-        />
-      </div>
-    );
+    return <div>{this.renderChart()}</div>;
   }
 }
 
